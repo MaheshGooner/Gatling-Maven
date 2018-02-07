@@ -18,12 +18,12 @@ class OpapUATConcurrentUsers extends Simulation {
     .acceptEncodingHeader("gzip, deflate")
     .userAgentHeader("Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0")
 
-  val scn = scenario("OpapBasicSimulation")
+  val scn = scenario("OpapConcurrentUsers")
     .exec(http("Launch_OPAP")
     .get("/"))
     .pause(5)
 
   setUp(
-    scn.inject(splitUsers(nbUsers) into atOnceUsers(10) separatedBy(5 seconds))
+    scn.inject(splitUsers(nbUsers) into atOnceUsers(100) separatedBy(5 seconds))
   ).protocols(httpConf)
 }
